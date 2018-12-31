@@ -43,7 +43,6 @@ class Fetcher {
         url,
         data: body,
       })
-      console.log('response, response', response)
 
       const { status, statusText, data } = response;
       return  {

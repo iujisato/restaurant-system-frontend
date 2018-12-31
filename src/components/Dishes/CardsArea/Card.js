@@ -1,20 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
-import { styles, StyledCard, StyledCardActions, StyledCardContent } from './CardsArea.styles';
+import {
+  styles,
+  StyledCard,
+  StyledCardActions,
+  StyledCardContent,
+  StyledTypography,
+  StyledFastfoodIcon,
+  StyledRestaurantMenuIcon,
+  StyledTrendingUpIcon,
+} from './CardsArea.styles';
 import AlertDialog from '../../Form/Dialogs/AlertDialog';
 import Fetcher from '../../../utils/fetcher';
 import FormDialog from '../../Form/Dialogs/FormDialog';
-import CreateSchema from '../FilterArea/Create.schema';
-import CreateForm from '../FilterArea/Create.form';
+import CreateSchema from './Create.schema';
+import CreateForm from './Create.form';
 import EditButton from '../../Form/Buttons/EditButton';
+import Divider from '@material-ui/core/Divider';
+import formatMoney from '../../../utils/currency';
 
 function handleDelete(data) {
   const dataObject = {
     method: 'DELETE',
-    path: `v1/restaurants/${data.id}`,
+    path: `v1/dishes/${data.id}`,
   }
 
   return new Fetcher(dataObject);
@@ -22,7 +32,7 @@ function handleDelete(data) {
 
 function formatName(name) {
   // Maximum number of characters before line break
-  const VISIBLE_CHARACTERS = 26;
+  const VISIBLE_CHARACTERS = 28;
 
   if (name.length <= VISIBLE_CHARACTERS) {
     return name;
@@ -32,15 +42,15 @@ function formatName(name) {
 
 function MediaCard(props) {
   const { classes, data } = props;
-  const { id, name, sample_image } = data;
+  const { id, name, sample_image, price_in_cents, restaurant } = data;
 
   const fetcherObject = {
     method: 'PATCH',
-    path: `v1/restaurants/${id}`,
+    path: `v1/dishes/${id}`,
   }
 
   const options = {
-    initialValues: { name },
+    initialValues: data,
     title: `Editing ${name}`,
   }
 
@@ -53,9 +63,24 @@ function MediaCard(props) {
       />
 
       <StyledCardContent>
-        <Typography gutterBottom variant="h5" component="h2">
+        <StyledTypography size='16px' marginBottom="10px">
+          <StyledFastfoodIcon />
+          {formatName(restaurant.name)}
+        </StyledTypography>
+
+        <Divider variant="middle" />
+
+        <StyledTypography size='18px' marginTop="10px" marginBottom="10px">
+          <StyledRestaurantMenuIcon />
           {formatName(name)}
-        </Typography>
+        </StyledTypography>
+
+        <Divider variant="middle" />
+
+        <StyledTypography marginTop="10px">
+          <StyledTrendingUpIcon />
+          {formatMoney(price_in_cents)}
+        </StyledTypography>
       </StyledCardContent>
 
       <StyledCardActions>

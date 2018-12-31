@@ -9,7 +9,6 @@ const renderErrorMessage = (errorMessage) => {
 }
 
 const FormikTextField = (args) => {
-  console.log('args', args,)
   const { field, form, ...props } = args;
   const { touched, errors } = form;
   const { name } = field;
@@ -18,7 +17,7 @@ const FormikTextField = (args) => {
 
   return (
     <Container>
-      <TextField type="text" error={hasError} {...field} {...props} />
+      <TextField fullWidth type="text" error={hasError} {...field} {...props} />
       { hasError ? renderErrorMessage(errors[name]) : null }
     </Container>
   );

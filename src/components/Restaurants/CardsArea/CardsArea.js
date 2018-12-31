@@ -23,7 +23,6 @@ class CardsArea extends Component {
     }
 
     return data.map( item => {
-      console.log('item', item)
       return (
         <Card data={item} key={item.id} />
       )

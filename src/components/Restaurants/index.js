@@ -8,15 +8,12 @@ class Restaurants extends Component {
   }
 
   callbackFunction(selectedOptions) {
-    console.log('organizer', selectedOptions)
     this.setState({ selectedOptions })
   }
 
   render () {
     return (
       <div>
-        Restaurantes
-
         <FilterArea callback={this.callbackFunction.bind(this)} />
         <CardsArea data={this.state.selectedOptions}/>
       </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import AppRoutes from './AppRoutes';
 import Header from './components/Header';
+import { BrowserRouter } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -10,12 +11,13 @@ const Footer = () => {
 
 const App = () => {
   return (
-    <div>
-      <Header />
-      <AppRoutes />
-      <Footer />
-
-    </div>
+    <BrowserRouter>
+      <div>
+        <Header />
+        <AppRoutes />
+        <Footer />
+      </div>
+    </BrowserRouter>
   )
 };
 

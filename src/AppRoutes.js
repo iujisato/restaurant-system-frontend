@@ -1,16 +1,16 @@
 import React from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Restaurants from './components/Restaurants';
+import Dishes from './components/Dishes';
 
 const Routes = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path='/' exact component={Home} />
-        <Route path='/restaurants' exact component={Restaurants} />
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <Route path='/' exact component={Home} />
+      <Route path='/restaurants' exact component={Restaurants} />
+      <Route path='/dishes' exact component={Dishes} />
+    </Switch>
   )
 }
 

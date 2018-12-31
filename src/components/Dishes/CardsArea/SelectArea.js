@@ -4,12 +4,6 @@ import Fetcher from '../../../utils/fetcher';
 import LoadingSpinner from '../../utils/LoadingSpinner';
 import MultipleSelect from '../../Form/AutoComplete/MultipleSelect';
 import DataParser from './DataParser';
-import SearchButton from '../../Form/Buttons/SearchButton';
-import CreateButton from '../../Form/Buttons/CreateButton';
-import FormDialog from '../../Form/Dialogs/FormDialog';
-import CreateForm from './Create.form';
-import CreateSchema from './Create.schema';
-import { Container, SearchBarContainer, SearchBarWrapper, ActionsContainer } from './FilterArea.styles';
 
 class FilterArea extends Component {
   state =  {
@@ -66,25 +60,16 @@ class FilterArea extends Component {
     }
 
     return (
-      <Container>
-        <SearchBarContainer>
-          <SearchBarWrapper>
-            <MultipleSelect suggestions={suggestions} callback={this.handleChange.bind(this)}/>
-          </SearchBarWrapper>
-        </SearchBarContainer>
-
-        <ActionsContainer>
-          <SearchButton onClick={this.handleSubmit.bind(this)}/>
-
-          <FormDialog
-            form={CreateForm}
-            fetcherObject={fetcherObject}
-            options={options}
-            schema={CreateSchema}
-            button={CreateButton}
-          />
-        </ActionsContainer>
-      </Container>
+      <div>
+        <SearchButton onClick={this.handleSubmit.bind(this)}/>
+        <FormDialog
+          form={CreateForm}
+          fetcherObject={fetcherObject}
+          options={options}
+          schema={CreateSchema}
+          button={CreateButton}
+        />
+      </div>
     )
   }
 

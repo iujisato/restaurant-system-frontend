@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import IconButton from '@material-ui/core/IconButton';
 import { ChildContainer } from '../index.styles';
+import { Link } from 'react-router-dom'
 
 export const StyledContainer = styled(ChildContainer)`
   && {
@@ -18,3 +19,8 @@ export const MenuButton = styled(IconButton)`
     aria-label: Menu;
   }
 `
+export const StyledLink = styled(Link)`
+  color: white;
+  text-decoration: none;
+`
+
