@@ -5,29 +5,51 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
 import { styles, StyledCard, StyledCardActions, StyledCardContent } from './CardsArea.styles';
-import DeleteButton from '../../Form/Buttons/DeleteButton';
-import EditButton from '../../Form/Buttons/EditButton';
+import AlertDialog from '../../Form/Dialogs/AlertDialog';
+import EditScreenDialog from '../../Form/Dialogs/EditScreenDialog';
+import Fetcher from '../../../utils/fetcher';
+
+function handleDelete(data) {
+  const dataObject = {
+    method: 'DELETE',
+    path: `v1/restaurants/${data.id}`,
+  }
+
+  return new Fetcher(dataObject);
+}
+
+function formatName(name) {
+  // Maximum number of characters before line break
+  const VISIBLE_CHARACTERS = 28;
+
+  if (name.length <= VISIBLE_CHARACTERS) {
+    return name;
+  }
+  return `${name.substr(0, VISIBLE_CHARACTERS-3)}...`
+}
 
 function MediaCard(props) {
   const { classes, data } = props;
+  const { name, sample_image } = data;
+
 
   return (
     <StyledCard>
       <CardMedia
         className={classes.media}
-        image="https://material-ui.com/static/images/cards/paella.jpg"
-        title={data.label}
+        image={sample_image}
+        title={name}
       />
 
       <StyledCardContent>
         <Typography gutterBottom variant="h5" component="h2">
-          {data.label}
+          {formatName(name)}
         </Typography>
       </StyledCardContent>
 
       <StyledCardActions>
-        <DeleteButton />
-        <EditButton />
+        <AlertDialog submitFunction={handleDelete(data)} />
+        <EditScreenDialog data={data} />
       </StyledCardActions>
     </StyledCard>
   );

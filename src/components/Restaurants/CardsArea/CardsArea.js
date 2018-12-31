@@ -1,35 +1,63 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Card from './Card';
-import { Content } from './CardsArea.styles'
+import { Content } from './CardsArea.styles';
+import Fetcher from '../../../utils/fetcher';
 
-function renderCards(itemsArray) {
-  return itemsArray.map( item => {
+class CardsArea extends Component {
+  state = {
+    data: [],
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.data === prevProps.data) {
+      return;
+    }
+
+    this.requestData();
+  }
+
+  renderCards() {
+    const { data } = this.state;
+    if (data.length === 0) {
+      return;
+    }
+
+    return data.map( item => {
+      console.log('item', item)
+      return (
+        <Card data={item} key={item.id} />
+      )
+    })
+  }
+
+  async requestData() {
+    const { data } = this.props;
+    const parsedData = data.map(restaurant => restaurant.value);
+
+    const dataObject = {
+      method: 'POST',
+      path: 'v1/restaurants/list',
+      body: {
+        restaurants: {
+          ids: parsedData,
+        }
+      }
+    }
+
+    const instance = new Fetcher(dataObject);
+    const response = await instance.request();
+
+    this.setState({ data: response.data })
+  }
+
+  render() {
     return (
-      <Card data={item} key={item.value} />
+      <Content>
+        { this.renderCards() }
+      </Content>
     )
-  })
-}
+  }
 
-function CardsArea() {
-  return (
-    <Content>
-      { renderCards(mock) }
-    </Content>
-  )
 }
-
-const mock = [
-  {value: 1, label: "Test"},
-  {value: 3, label: "Blondie foods"},
-  {value: 4, label: "Caramel foods"},
-  {value: 5, label: "Coconut foods"},
-  {value: 6, label: "Green Tea foods"},
-  {value: 7, label: "Banana foods"},
-  {value: 8, label: "Pistachio foods"},
-  {value: 9, label: "Mint Chocolate Chip foods"},
-  {value: 10, label: "Pumpkin foods"},
-  {value: 11, label: "Cheesecake foods"},
-  {value: 12, label: "Almond foods"},
-];
 
 export default CardsArea;

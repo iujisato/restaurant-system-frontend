@@ -21,10 +21,11 @@ const styles = theme => ({
 });
 
 function IconLabelButtons(props) {
-  const { classes } = props;
+  const { classes, onClick } = props;
+
   return (
     <div>
-      <Button variant="contained" color="primary" size="small" className={classes.button}>
+      <Button variant="contained" color="primary" size="small" className={classes.button} onClick={onClick}>
         <EditIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
         Edit
       </Button>
@@ -34,6 +35,7 @@ function IconLabelButtons(props) {
 
 IconLabelButtons.propTypes = {
   classes: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(IconLabelButtons);

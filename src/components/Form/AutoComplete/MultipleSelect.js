@@ -107,15 +107,17 @@ const components = {
 
 class IntegrationReactSelect extends React.Component {
   state = {
-    multi: null,
+    selectedOptions: [],
   };
 
-  handleChange = selectedOption => {
-    const { value } = selectedOption
+  handleChange = selectedOptions => {
+    const { callback } = this.props;
 
-    this.setState({
-      multi: value,
-    });
+    this.setState({ selectedOptions });
+
+    if (callback instanceof Function) {
+      callback(selectedOptions);
+    }
   };
 
   render() {
@@ -144,7 +146,6 @@ class IntegrationReactSelect extends React.Component {
           }}
           options={suggestions}
           components={components}
-          value={this.state.multi}
           onChange={this.handleChange}
           placeholder=""
           hideSelectedOptions
@@ -158,7 +159,7 @@ class IntegrationReactSelect extends React.Component {
 IntegrationReactSelect.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-  suggestions: PropTypes.object.isRequired,
+  suggestions: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(IntegrationReactSelect);
